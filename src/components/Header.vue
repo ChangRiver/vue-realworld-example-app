@@ -1,26 +1,26 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <routerLink class="navbar-brand" to="/"></routerLink>
+      <router-link class="navbar-brand" to="/"></router-link>
 
       <ul class="nav navbar-nav pull-xs-right">
 
         <li class="nav-item">
-          <routerLink class="nav-link" to="/">
+          <router-link class="nav-link" to="/">
             Home
-          </routerLink>
+          </router-link>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">
+          <router-link class="nav-link" to="/login">
             Sign in
-          </a>
+          </router-link>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">
+          <router-link class="nav-link" to="/register">
             Sign up
-          </a>
+          </router-link>
         </li>
 
       </ul>
