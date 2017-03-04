@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <router-link class="navbar-brand" to="/"></router-link>
+      <router-link class="navbar-brand" to="/">conduit</router-link>
 
       <ul class="nav navbar-nav pull-xs-right">
 
