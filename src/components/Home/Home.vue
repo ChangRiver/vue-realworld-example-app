@@ -25,7 +25,7 @@
 <script>
 import Banner from './Banner';
 import MainView from './MainView';
-import api from '../../services/api';
+import { mapActions } from 'vuex'
 
 export default {
   name: 'home',
@@ -39,7 +39,13 @@ export default {
     MainView: MainView
   },
   beforeMount() {
-
+   let  res = this.getArticles()
+   console.log('res ', res)
+  },
+  methods: {
+    ...mapActions([
+      'getArticles'
+    ])
   }
 }
 </script>

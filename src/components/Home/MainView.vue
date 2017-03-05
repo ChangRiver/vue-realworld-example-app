@@ -14,7 +14,7 @@
       </ul>
     </div>
 
-    <article-list></article-list>
+    <article-list :articles="$store.state.articles"></article-list>
   </div>
 </template>
 
