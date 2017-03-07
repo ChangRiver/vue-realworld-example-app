@@ -5,11 +5,12 @@ import {
 } from './mutation-types'
 
 export default {
-  async getArticles({
-    commit,
-    state
+  getArticles({
+    commit
   }) {
-    let res = await api.Articles.all()
-    commit(HOME_PAGE_LOADED, res)
+    api.Articles.all().then(res => {
+      commit(HOME_PAGE_LOADED, res.articles)
+      console.log('data ', res.articles)
+    });
   }
 }

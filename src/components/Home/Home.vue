@@ -6,7 +6,7 @@
     <div class="container page">
       <div class="row">
 
-        <main-view></main-view>
+        <main-view :articles="articles"></main-view>
 
         <div class="col-md-3">
           <div class="sidebar">
@@ -25,7 +25,8 @@
 <script>
 import Banner from './Banner';
 import MainView from './MainView';
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import api from '../../services/api'
 
 export default {
   name: 'home',
@@ -39,8 +40,13 @@ export default {
     MainView: MainView
   },
   beforeMount() {
-   let  res = this.getArticles()
-   console.log('res ', res)
+    this.getArticles()
+    //console.log('res data', res);
+  },
+  computed: {
+    ...mapState([
+      'articles'
+    ])
   },
   methods: {
     ...mapActions([

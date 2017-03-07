@@ -14,7 +14,7 @@
       </ul>
     </div>
 
-    <article-list :articles="$store.state.articles"></article-list>
+    <article-list :articles="articles"></article-list>
   </div>
 </template>
 
@@ -26,8 +26,12 @@ export default {
 
     }
   },
+  props: ['articles'],
   components: {
     ArticleList: ArticleList
+  },
+  computed: {
+
   }
 }
 </script>

@@ -5,9 +5,9 @@ Vue.use(VueResource);
 
 const API_ROOT = 'https://conduit.productionready.io/api';
 
-const responseBody = res => res.body;
+const responseBody = res => Promise.resolve(res.body);
 
-const handlerErr = err => console.error(err);
+const handlerErr = err => Promise.reject(err);
 
 let token = null;
 

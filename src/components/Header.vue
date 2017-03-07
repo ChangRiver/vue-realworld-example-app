@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <router-link class="navbar-brand" to="/">{{ $store.state.appName }}</router-link>
+      <router-link class="navbar-brand" to="/">{{ appName }}</router-link>
 
       <ul class="nav navbar-nav pull-xs-right">
 
@@ -29,7 +29,17 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
+    data() {
+      return {
 
+      }
+    },
+    computed: {
+      ...mapState([
+        'appName'
+      ])
+    }
   }
 </script>
