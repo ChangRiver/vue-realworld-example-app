@@ -6,7 +6,7 @@
     <div class="container page">
       <div class="row">
 
-        <main-view :articles="articles"></main-view>
+        <main-view></main-view>
 
         <div class="col-md-3">
           <div class="sidebar">
@@ -25,7 +25,7 @@
 <script>
 import Banner from './Banner';
 import MainView from './MainView';
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import api from '../../services/api'
 
 export default {
@@ -43,11 +43,6 @@ export default {
     this.getArticles()
     //console.log('res data', res);
   },
-  computed: {
-    ...mapState([
-      'articles'
-    ])
-  },
   methods: {
     ...mapActions([
       'getArticles'
@@ -59,5 +54,9 @@ export default {
 <style>
   .nav-link {
     cursor:pointer;
+  }
+
+  .home-page .banner {
+    background: #316B86
   }
 </style>

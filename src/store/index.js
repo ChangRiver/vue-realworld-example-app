@@ -8,7 +8,9 @@ Vue.use(Vuex)
 
 const state = {
   appName: 'conduit',
-  articles: null
+  articles: null,
+  currentUser: null,
+  token: null
 };
 
 

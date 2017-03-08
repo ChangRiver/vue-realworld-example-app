@@ -1,19 +1,33 @@
 <template>
   <div id="app">
-    <layout-header></layout-header>
+    <layout-header :appName="appName" :currentUser="currentUser"></layout-header>
     <router-view></router-view>
     <layout-footer></layout-footer>
   </div>
 </template>
 
 <script>
+  import api from './services/api';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { mapState } from 'vuex';
 export default {
   name: 'app',
   components: {
     layoutHeader: Header,
     layoutFooter: Footer
+  },
+  beforeMount() {
+    const token = window.localStorage.getItem('jwt');
+
+    if(token) {
+      api.setToken(token);
+    }
+
+    this.$store.dispatch('onLoad')
+  },
+  computed: {
+    ...mapState(['appName', 'currentUser'])
   }
 }
 </script>

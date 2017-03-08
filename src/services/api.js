@@ -9,11 +9,13 @@ const responseBody = res => Promise.resolve(res.body);
 
 const handlerErr = err => Promise.reject(err);
 
-let token = null;
+let token = window.localStorage.getItem('jwt');
 
 if(token) {
   Vue.http.headers.common['Authorization'] = `Token ${token}`;
 }
+
+const setToken = _token => { token = _token; }
 
 const request = {
   get: url =>
@@ -31,7 +33,19 @@ const Articles = {
     request.get(`/articles?limit=10`)
 };
 
+const Auth = {
+  login: (email, password) =>
+    request.post('/users/login', { user: { email, password } }),
+  current: () =>
+    request.get('/user')
+};
+
+//console.log('token is ', token)
 
 export default {
-  Articles
+  Articles,
+  Auth,
+  setToken
 };
+
+

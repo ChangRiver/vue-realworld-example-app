@@ -20,18 +20,20 @@
 
 <script>
 import ArticleList from '../ArticleList';
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
 
     }
   },
-  props: ['articles'],
   components: {
     ArticleList: ArticleList
   },
   computed: {
-
+    ...mapState([
+      'articles'
+    ])
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <article-preview v-for="article in articles" :article="article"></article-preview>
+    <article-preview v-for="(article, index) in articles" :article="article" :key="index"></article-preview>
   </div>
 </template>
 
