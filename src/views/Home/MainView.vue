@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ArticleList from '../ArticleList';
+import ArticleList from '../../components/ArticleList';
 import { mapState } from 'vuex';
 export default {
   data() {
@@ -30,10 +30,6 @@ export default {
   components: {
     ArticleList: ArticleList
   },
-  computed: {
-    ...mapState([
-      'articles'
-    ])
-  }
+  computed: mapState(['articles'])
 }
 </script>

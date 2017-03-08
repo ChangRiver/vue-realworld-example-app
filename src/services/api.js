@@ -39,7 +39,9 @@ const Auth = {
   current: () =>
     request.get('/user'),
   register: (username, email, password) =>
-    request.post('/users', { user: { username, email, password } })
+    request.post('/users', { user: { username, email, password } }),
+  save: user =>
+    request.put('/user', { user })
 };
 
 //console.log('token is ', token)
