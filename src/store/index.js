@@ -12,7 +12,9 @@ const state = {
   appName: 'conduit',
   articles: null,
   currentUser: null,
-  token: null
+  token: null,
+  article: null,
+  comments: []
 };
 
 

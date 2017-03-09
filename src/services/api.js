@@ -30,7 +30,11 @@ const request = {
 
 const Articles = {
   all: page =>
-    request.get(`/articles?limit=10`)
+    request.get(`/articles?limit=10`),
+  get: slug =>
+    request.get(`/articles/${slug}`),
+  del: slug =>
+    request.del(`/articles/${slug}`)
 };
 
 const Auth = {
@@ -44,11 +48,19 @@ const Auth = {
     request.put('/user', { user })
 };
 
-//console.log('token is ', token)
+const Comments = {
+  forArticle: slug =>
+    request.get(`/articles/${slug}/comments`),
+  create: (slug, comment) =>
+    request.post(`/articles/${slug}/comments`, { comment }),
+  delete: (slug, commentId) =>
+    request.del(`/articles/${slug}/comments/${commentId}`)
+};
 
 export default {
   Articles,
   Auth,
+  Comments,
   setToken
 };
 

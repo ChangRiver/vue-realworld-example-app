@@ -27,7 +27,7 @@
     <p>{{article.description}}</p>
     <span>Read more...</span>
     <ul class="tag-list">
-      <li class="tag-default tag-pill tag-outline" v-for="tag in article.tagList">
+      <li class="tag-default tag-pill tag-outline" v-for="tag in article.tagList" :key="tag">
         {{ tag }}
       </li>
     </ul>

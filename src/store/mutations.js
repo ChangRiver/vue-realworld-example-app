@@ -4,7 +4,13 @@ import {
   REGISTER,
   APP_LOAD,
   LOGOUT,
-  SETTINGS_SAVED
+  SETTINGS_SAVED,
+  ARTICLE_DETAIL_LOADED,
+  ARTICLE_COMMENT_LOADED,
+  ARTICLE_PAGE_UNLOADED,
+  DELETE_ARTICLE,
+  DELETE_COMMENT,
+  ADD_COMMENT
 } from './mutation-types'
 
 export default  {
@@ -29,5 +35,21 @@ export default  {
   },
   [SETTINGS_SAVED](state, { user }) {
     state.currentUser = user;
+  },
+  [ARTICLE_DETAIL_LOADED](state, { article }) {
+    state.article = article;
+  },
+  [ARTICLE_COMMENT_LOADED](state, { comments }) {
+    state.comments = comments;
+  },
+  [ARTICLE_PAGE_UNLOADED](state) {
+    state.article = null;
+    state.comments = null;
+  },
+  [DELETE_COMMENT](state, { comment, commentId }) {
+    state.commnets = state.comments.filter(comment => comment.id !== commentId)
+  },
+  [ADD_COMMENT](state, { comment }) {
+    state.comments = state.comments.concat([comment])
   }
 }
