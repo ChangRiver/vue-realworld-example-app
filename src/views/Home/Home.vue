@@ -43,9 +43,13 @@ export default {
     this.getArticles()
     //console.log('res data', res);
   },
+  beforeDestroy() {
+    this.onUnload()
+  },
   methods: {
     ...mapActions([
-      'getArticles'
+      'getArticles',
+      'onUnload'
     ])
   }
 }

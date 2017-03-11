@@ -5,6 +5,9 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import Settings from '../views/Settings/Settings';
 import Article from '../views/Article/Article';
+import Profile from '../views/Profile/Profile';
+import ProfileFavorites from '../views/Profile/ProfileFavorites';
+import ProfileArticles from '../views/Profile/ProfileArticles';
 
 Vue.use(Router)
 
@@ -34,6 +37,21 @@ export default new Router({
       path: '/article/:id',
       name: 'Article',
       component: Article
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      children: [
+        {
+          path: ':username',
+          component: ProfileArticles
+        },
+        {
+          path: ':username/favorites',
+          component: ProfileFavorites
+        }
+      ]
     }
   ]
 })

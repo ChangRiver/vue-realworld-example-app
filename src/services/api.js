@@ -9,6 +9,8 @@ const responseBody = res => Promise.resolve(res.body);
 
 const handlerErr = err => Promise.reject(err);
 
+const encode = encodeURIComponent;
+
 let token = window.localStorage.getItem('jwt');
 
 if(token) {
@@ -34,7 +36,11 @@ const Articles = {
   get: slug =>
     request.get(`/articles/${slug}`),
   del: slug =>
-    request.del(`/articles/${slug}`)
+    request.del(`/articles/${slug}`),
+  byAuthor: (author, page) =>
+    request.get(`/articles?author=${encode(author)}&limit=5`),
+  favoritedBy: (author, page) =>
+    request.get(`/articles?favorited=${encode(author)}&limit=5`)
 };
 
 const Auth = {
@@ -57,10 +63,20 @@ const Comments = {
     request.del(`/articles/${slug}/comments/${commentId}`)
 };
 
+const Profile = {
+  follow: username =>
+    request.post(`/profiles/${username}/follow`),
+  get: username =>
+    request.get(`/profiles/${username}`),
+  unfollow: username =>
+    request.del(`/profiles/${username}/follow`)
+};
+
 export default {
   Articles,
   Auth,
   Comments,
+  Profile,
   setToken
 };
 

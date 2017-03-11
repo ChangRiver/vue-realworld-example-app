@@ -32,6 +32,7 @@
         let slug = this.slug;
         let body = this.comment.body;
         this.$store.dispatch('createComment', { slug, body })
+        this.comment.body = "";
       }
     }
   }
