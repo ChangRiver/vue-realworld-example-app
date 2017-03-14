@@ -14,18 +14,25 @@ import {
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_LOADED,
-  PROFILE_FAVORITES_PAGE_UNLOADED
+  PROFILE_FAVORITES_PAGE_UNLOADED,
+  APPLY_TAG_FILTER
 } from './mutation-types'
 
 export default {
-  getArticles({
-    commit
-  }) {
-    api.Articles.all().then(res => {
-      commit(HOME_PAGE_LOADED, res.articles)
-    });
+async  onHomePageLoad({
+    commit, state
+  }, tab) {
+    let articles;
+    const articlesPromise = state.token ?
+      api.Articles.feed() :
+      api.Articles.all();
+
+    await articlesPromise.then(res => articles = res.articles);
+    const tags = await api.Tags.getAll();
+
+    commit(HOME_PAGE_LOADED,  { articles, ...tags, tab });
   },
-  onUnload({
+  onHomePageUnload({
     commit
   }) {
     commit(HOME_PAGE_UNLOADED)
@@ -128,6 +135,13 @@ export default {
     commit
   }) {
     commit(PROFILE_FAVORITES_PAGE_UNLOADED)
+  },
+  async onClickTag({
+    commit
+  }, tag) {
+    let articles = await api.Articles.byTag(tag);
+    // console.log('apply by tag ', articles);
+    commit(APPLY_TAG_FILTER, { ...articles, tag })
   }
 }
 

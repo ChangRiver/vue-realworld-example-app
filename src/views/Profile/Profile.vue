@@ -35,14 +35,16 @@
             <ul class="nav nav-pills outline-active">
               <li class="nav-item">
                 <router-link
+                  active-class="active"
                   :to="'/profile/' + profile.username"
-                  class="nav-link active">
+                  class="nav-link">
                   My Articles
                 </router-link>
               </li>
 
               <li class="nav-item">
                 <router-link
+                  active-class="active"
                   :to="'/profile/' + profile.username + '/favorites'"
                   class="nav-link">
                   Favorited Articles
@@ -64,16 +66,10 @@
 
 <script>
   import { mapState, mapGetters, mapActions } from 'vuex'
+  import ArticleList from '../../components/ArticleList'
   import FollowUserButton from '../../components/FollowUserButton'
   import EditProfileSettings from '../../components/EditProfileSettings'
   export default {
-    beforeMount() {
-      let username = this.$route.params.username;
-      this.getProfile({ username });
-    },
-    beforeDestroy() {
-      this.clearProfile()
-    },
     components: {
       FollowUserButton: FollowUserButton,
       EditProfileSettings: EditProfileSettings
@@ -81,16 +77,10 @@
     computed: {
       ...mapGetters(['isUser']),
       ...mapState([
-        'articles',
-        'currentUser',
         'profile'
       ])
     },
     methods: {
-      ...mapActions([
-        'getProfile',
-        'clearProfile'
-      ]),
       Follow(username) {
         this.$store.dispatch('onFollow', { username })
       },
@@ -100,3 +90,10 @@
     }
   }
 </script>
+<style>
+  /*.nav-item .router-link-active {*/
+    /*background: #fff !important;*/
+    /*border-bottom: 2px solid #5CB85C !important;*/
+    /*color: #5CB85C !important;*/
+  /*}*/
+</style>

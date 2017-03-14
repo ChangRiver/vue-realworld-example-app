@@ -6,11 +6,28 @@
         <li class="nav-item">
           <a
             href=""
-            class="nav-link active">
+            class="nav-link"
+            :class="{'active': tab === 'feed'}"
+            @click.prevent="onFeedTab">
+            Your Feed
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            href=""
+            class="nav-link"
+            :class="{'active': tab === 'all'}"
+            @click.prevent="onGlobalFeedTab">
             Global Feed
           </a>
         </li>
 
+        <li v-if="tag" class="nav-item">
+          <a href="" class="nav-link active">
+            <i class="ion-pound"></i> {{ tag }}
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -19,17 +36,32 @@
 </template>
 
 <script>
+import api from '../../services/api';
 import ArticleList from '../../components/ArticleList';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 export default {
-  data() {
-    return {
-
-    }
-  },
   components: {
     ArticleList: ArticleList
   },
-  computed: mapState(['articles'])
+  computed: mapState(['articles', 'token', 'tab', 'tag']),
+  methods: {
+    ...mapMutations(['CHANGE_TAB']),
+    onFeedTab() {
+      if(this.token) {
+        let feedType = 'feed';
+        api.Articles.feed()
+          .then(res => {
+          this.CHANGE_TAB({ feedType, ...res })
+        })
+      }
+    },
+    onGlobalFeedTab() {
+      let feedType = 'all';
+      api.Articles.all()
+        .then(res => {
+        this.CHANGE_TAB({ feedType, ...res })
+      })
+    }
+  }
 }
 </script>

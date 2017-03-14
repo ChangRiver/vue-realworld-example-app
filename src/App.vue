@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <layout-header :appName="appName" :currentUser="currentUser"></layout-header>
-    <router-view></router-view>
+    <router-view v-if="appLoaded"></router-view>
     <layout-footer></layout-footer>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
     layoutHeader: Header,
     layoutFooter: Footer
   },
-  beforeMount() {
+  mounted() {
     const token = window.localStorage.getItem('jwt');
 
     if(token) {
@@ -27,7 +27,7 @@ export default {
     this.$store.dispatch('onLoad')
   },
   computed: {
-    ...mapState(['appName', 'currentUser'])
+    ...mapState(['appName', 'currentUser', 'appLoaded'])
   }
 }
 </script>

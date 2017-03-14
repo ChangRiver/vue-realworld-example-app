@@ -12,6 +12,7 @@
           <div class="sidebar">
             <p>Popular Tags</p>
 
+            <tags :tags="tags"></tags>
           </div>
         </div>
 
@@ -25,31 +26,29 @@
 <script>
 import Banner from './Banner';
 import MainView from './MainView';
-import { mapActions } from 'vuex'
+import Tags from './Tags';
+import { mapState, mapActions } from 'vuex'
 import api from '../../services/api'
 
 export default {
   name: 'home',
-  data() {
-    return {
-
-    }
-  },
+  computed: mapState(['token', 'tags']),
   components: {
     Banner: Banner,
-    MainView: MainView
+    MainView: MainView,
+    Tags: Tags
   },
-  beforeMount() {
-    this.getArticles()
-    //console.log('res data', res);
+  mounted() {
+    const tab = this.token ? 'feed' : 'all';
+    this.onHomePageLoad(tab)
   },
   beforeDestroy() {
-    this.onUnload()
+    this.onHomePageUnload()
   },
   methods: {
     ...mapActions([
-      'getArticles',
-      'onUnload'
+      'onHomePageLoad',
+      'onHomePageUnload'
     ])
   }
 }

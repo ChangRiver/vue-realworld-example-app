@@ -11,13 +11,17 @@ Vue.use(Vuex)
 
 const state = {
   appName: 'conduit',
+  appLoaded: false,
   articles: null,
+  tags: null,
+  tag: null,
   articlesCount: null,
   currentUser: null,
   token: null,
   article: null,
   comments: [],
-  profile: {}
+  profile: {},
+  tab: null
 };
 
 
