@@ -31,7 +31,13 @@
       </ul>
     </div>
 
-    <article-list :articles="articles"></article-list>
+    <article-list
+      :articles="articles"
+      :articlesCount="articlesCount"
+      :currentPage="currentPage"
+      @onSetPage="onSetPage">
+
+    </article-list>
   </div>
 </template>
 
@@ -43,9 +49,9 @@ export default {
   components: {
     ArticleList: ArticleList
   },
-  computed: mapState(['articles', 'token', 'tab', 'tag']),
+  computed: mapState(['articles', 'token', 'tab', 'tag', 'articlesCount', 'currentPage']),
   methods: {
-    ...mapMutations(['CHANGE_TAB']),
+    ...mapMutations(['CHANGE_TAB', 'SET_PAGE']),
     onFeedTab() {
       if(this.token) {
         let feedType = 'feed';
@@ -61,6 +67,15 @@ export default {
         .then(res => {
         this.CHANGE_TAB({ feedType, ...res })
       })
+    },
+    async onSetPage(page) {
+      const currentPage = page;
+      let articles;
+      let articlesPromise = this.tab === 'feed' ?
+        api.Articles.feed(page) :
+        api.Articles.all(page)
+      await articlesPromise.then(res => articles = res)
+      this.SET_PAGE({ currentPage, ...articles })
     }
   }
 }

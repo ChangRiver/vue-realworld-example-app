@@ -19,7 +19,8 @@ import {
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
   CHANGE_TAB,
-  APPLY_TAG_FILTER
+  APPLY_TAG_FILTER,
+  SET_PAGE
 } from './mutation-types'
 
 export default  {
@@ -27,10 +28,12 @@ export default  {
     state.articles = payload.articles;
     state.tags = payload.tags;
     state.tab = payload.tab;
+    state.articlesCount = payload.articlesCount;
   },
   [HOME_PAGE_UNLOADED](state) {
-    state.articles = null;
+    state.articles = [];
     state.tag = null;
+    state.articlesCount = null;
   },
   [LOGIN] (state, { currentUser, token }) {
     state.currentUser = currentUser;
@@ -74,7 +77,7 @@ export default  {
     state.profile = profile.profile
   },
   [PROFILE_PAGE_UNLOADED] (state) {
-    state.articles = null;
+    state.articles = [];
     state.articlesCount = null;
     state.profile = null;
   },
@@ -90,7 +93,7 @@ export default  {
     state.profile = profile.profile
   },
   [PROFILE_FAVORITES_PAGE_UNLOADED] (state) {
-    state.articles = null;
+    state.articles = [];
     state.articlesCount = null;
     state.profile = null;
   },
@@ -105,5 +108,10 @@ export default  {
     state.articlesCount = payload.articlesCount;
     state.tab = null;
     state.tag = payload.tag;
+  },
+  [SET_PAGE] (state, payload) {
+    state.articles = payload.articles;
+    state.articlesCount = payload.articlesCount;
+    state.currentPage = payload.currentPage
   }
 }

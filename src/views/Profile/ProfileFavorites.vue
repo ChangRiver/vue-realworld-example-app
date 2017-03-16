@@ -1,5 +1,5 @@
 <template>
-  <article-list :articles="articles"></article-list>
+  <article-list :articles="articles" :articlesCount="articlesCount"></article-list>
 </template>
 <script>
   import { mapState, mapActions } from 'vuex'
@@ -12,7 +12,7 @@
     components: {
       ArticleList: ArticleList
     },
-    computed: mapState([ 'articles' ]),
+    computed: mapState([ 'articles', 'articlesCount' ]),
     methods: {
       ...mapActions([
         'getFavoritesProfile'

@@ -30,21 +30,22 @@ const request = {
     Vue.http.delete(`${API_ROOT}${url}`).then(responseBody, handlerErr)
 };
 
+const limit = (count, p) => `limit=${count}&offset=${p ? p * count:0}`;
 const Articles = {
   all: page =>
-    request.get(`/articles?limit=10`),
+    request.get(`/articles?${limit(10, page)}`),
   get: slug =>
     request.get(`/articles/${slug}`),
   del: slug =>
     request.del(`/articles/${slug}`),
   byAuthor: (author, page) =>
-    request.get(`/articles?author=${encode(author)}&limit=5`),
+    request.get(`/articles?author=${encode(author)}&${limit(10, page)}`),
   byTag: (tag, page) =>
-    request.get(`/articles?tag=${encode(tag)}&limit=10`),
+    request.get(`/articles?tag=${encode(tag)}&${limit(10, page)}`),
   favoritedBy: (author, page) =>
-    request.get(`/articles?favorited=${encode(author)}&limit=5`),
+    request.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
   feed: () =>
-    request.get('/articles/feed?limit=10')
+    request.get('/articles/feed?limit=10&offset=0')
 };
 
 const Auth = {

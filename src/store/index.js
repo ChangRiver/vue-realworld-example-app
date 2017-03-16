@@ -12,7 +12,7 @@ Vue.use(Vuex)
 const state = {
   appName: 'conduit',
   appLoaded: false,
-  articles: null,
+  articles: [],
   tags: null,
   tag: null,
   articlesCount: null,
@@ -21,7 +21,8 @@ const state = {
   article: null,
   comments: [],
   profile: {},
-  tab: null
+  tab: null,
+  currentPage: 1
 };
 
 

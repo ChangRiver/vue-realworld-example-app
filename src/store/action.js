@@ -15,7 +15,8 @@ import {
   PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
-  APPLY_TAG_FILTER
+  APPLY_TAG_FILTER,
+  SET_PAGE
 } from './mutation-types'
 
 export default {
@@ -27,10 +28,13 @@ async  onHomePageLoad({
       api.Articles.feed() :
       api.Articles.all();
 
-    await articlesPromise.then(res => articles = res.articles);
+    await articlesPromise.then(res => {
+      console.log('onHomePageLoad articles', res);
+      articles = res;
+    });
     const tags = await api.Tags.getAll();
 
-    commit(HOME_PAGE_LOADED,  { articles, ...tags, tab });
+    commit(HOME_PAGE_LOADED,  { tab, ...tags, ...articles });
   },
   onHomePageUnload({
     commit
@@ -143,5 +147,11 @@ async  onHomePageLoad({
     // console.log('apply by tag ', articles);
     commit(APPLY_TAG_FILTER, { ...articles, tag })
   }
+  // async onSetPage({
+  //   commit, state
+  // }, tab, p) {
+  //   let payload = state.tab === 'feed' ? api.Articles.feed(p) : api.Articles.all(p)
+  //   // commit(SET_PAGE, payload)
+  // }
 }
 
