@@ -6,7 +6,6 @@ import {
   APP_LOAD,
   ARTICLE_DETAIL_LOADED,
   ARTICLE_COMMENT_LOADED,
-  DELETE_ARTICLE,
   DELETE_COMMENT,
   ADD_COMMENT,
   FOLLOW_USER,
@@ -16,7 +15,8 @@ import {
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
   APPLY_TAG_FILTER,
-  SET_PAGE
+  ARTICLE_CREATED,
+  EDITOR_PAGE_LOADED
 } from './mutation-types'
 
 export default {
@@ -67,13 +67,9 @@ async  onHomePageLoad({
       })
   },
   delArticle({
-    commit
+    commit, state
   }, slug) {
     api.Articles.del(slug)
-      .then(res => {
-        console.log('del succ', res)
-        // commit(DELETE_ARTICLE)
-      })
   },
   delComment({
     commit
@@ -146,12 +142,22 @@ async  onHomePageLoad({
     let articles = await api.Articles.byTag(tag);
     // console.log('apply by tag ', articles);
     commit(APPLY_TAG_FILTER, { ...articles, tag })
+  },
+  onArticleCreated({
+    commit
+  }, article ,slug) {
+    const promise = slug ?
+      api.Articles.update(Object.assign(article, slug)) :
+      api.Articles.create(article)
   }
-  // async onSetPage({
-  //   commit, state
-  // }, tab, p) {
-  //   let payload = state.tab === 'feed' ? api.Articles.feed(p) : api.Articles.all(p)
-  //   // commit(SET_PAGE, payload)
+  // async onEditorPageLoaded({
+  //   commit
+  // }, slug) {
+  //   if(slug) {
+  //    const articles = await api.Articles.get(slug)
+  //    commit(EDITOR_PAGE_LOADED, articles)
+  //   }
+  //   commit(EDITOR_PAGE_LOADED)
   // }
 }
 

@@ -20,6 +20,11 @@ export const UNFOLLOW_USER   = 'UNFOLLOW_USER';
 export const CHANGE_TAB      = 'CHANGE_TAB';
 export const APPLY_TAG_FILTER = 'APPLY_TAG_FILTER';
 export const SET_PAGE        = 'SET_PAGE';
+export const ARTICLE_CREATED = 'ARTICLE_CREATED';
+export const EDITOR_PAGE_LOADED = 'EDITOR_PAGE_LOADED';
+
+
+
 
 
 

@@ -2,7 +2,7 @@
   <span v-if="canModify">
 
     <router-link
-      to="'/editor/' + article.slug"
+      :to="'/editor/' + article.slug"
       class="btn btn-outline-secondary btn-sm">
       <i class="ion-edit"></i> Edit Article
     </router-link>
@@ -21,7 +21,11 @@ import { mapActions } from 'vuex';
 export default {
   props: ['article', 'canModify'],
   methods: {
-    ...mapActions(['delArticle'])
+    ...mapActions(['delArticle']),
+    del(slug) {
+      this.delArticle(slug);
+      this.$router.push('/')
+    }
   }
 }
 </script>

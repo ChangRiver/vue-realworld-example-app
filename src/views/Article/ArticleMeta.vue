@@ -5,7 +5,7 @@
     </router-link>
 
     <div class="info">
-      <router-link class="author" to="'@' + article.author.username">
+      <router-link class="author" :to="'@' + article.author.username">
         {{ article.author.username }}
       </router-link>
       <span class="date">
