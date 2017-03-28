@@ -8,10 +8,12 @@ import Article from '../views/Article/Article';
 import Profile from '../views/Profile/Profile';
 import ProfileFavorites from '../views/Profile/ProfileFavorites';
 import ProfileArticles from '../views/Profile/ProfileArticles';
+import Editor from '../views/Editor/Editor';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -38,20 +40,40 @@ export default new Router({
       name: 'Article',
       component: Article
     },
+    // {
+    //   path: '/profile',
+    //   name: 'Profile',
+    //   component: Profile,
+    //   children: [
+    //     {
+    //       path: ':username',
+    //       component: ProfileArticles
+    //     },
+    //     {
+    //       path: ':username/favorites',
+    //       component: ProfileFavorites
+    //     }
+    //   ]
+    // },
     {
-      path: '/profile',
-      name: 'Profile',
-      component: Profile,
-      children: [
-        {
-          path: ':username',
-          component: ProfileArticles
-        },
-        {
-          path: ':username/favorites',
-          component: ProfileFavorites
-        }
-      ]
+      path: '/@:username/article/:id',
+      component: Article
+    },
+    {
+      path: '/@:username',
+      component: Profile
+    },
+    {
+      path: '/@:username/favorites',
+      component: ProfileFavorites
+    },
+    {
+      path: '/editor',
+      component: Editor
+    },
+    {
+      path: '/editor/:slug',
+      component: Editor
     }
   ]
 })

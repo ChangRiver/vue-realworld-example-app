@@ -35,17 +35,15 @@
             <ul class="nav nav-pills outline-active">
               <li class="nav-item">
                 <router-link
-                  active-class="active"
-                  :to="'/profile/' + profile.username"
-                  class="nav-link">
+                  :to="'/@' + profile.username"
+                  class="nav-link active">
                   My Articles
                 </router-link>
               </li>
 
               <li class="nav-item">
                 <router-link
-                  active-class="active"
-                  :to="'/profile/' + profile.username + '/favorites'"
+                  :to="'/@' + profile.username + '/favorites'"
                   class="nav-link">
                   Favorited Articles
                 </router-link>
@@ -54,7 +52,8 @@
 
           </div>
 
-          <router-view></router-view>
+          <!--<router-view></router-view>-->
+          <article-list :articles="articles" :articlesCount="articlesCount"></article-list>
 
         </div>
 
@@ -72,15 +71,28 @@
   export default {
     components: {
       FollowUserButton: FollowUserButton,
-      EditProfileSettings: EditProfileSettings
+      EditProfileSettings: EditProfileSettings,
+      ArticleList: ArticleList
     },
     computed: {
       ...mapGetters(['isUser']),
       ...mapState([
-        'profile'
+      'profile',
+      'articles',
+      'articlesCount'
       ])
     },
+  mounted()
+  {
+    let username = this.$route.params.username;
+    this.getProfile({username});
+  }
+  ,
     methods: {
+    ...
+      mapActions([
+        'getProfile'
+      ]),
       Follow(username) {
         this.$store.dispatch('onFollow', { username })
       },
@@ -90,10 +102,4 @@
     }
   }
 </script>
-<style>
-  /*.nav-item .router-link-active {*/
-    /*background: #fff !important;*/
-    /*border-bottom: 2px solid #5CB85C !important;*/
-    /*color: #5CB85C !important;*/
-  /*}*/
-</style>
+

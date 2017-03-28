@@ -25,7 +25,7 @@
         <li class="nav-item">
           <router-link
             class="nav-link"
-            :to="'/profile/' + currentUser.username">
+            :to="'/@' + currentUser.username">
             <img :src="currentUser.image" alt="" class="user-pic">
             {{ currentUser.username }}
           </router-link>
