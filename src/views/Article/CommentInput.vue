@@ -1,5 +1,5 @@
 <template>
-  <form class="card comment-form" @submit="submitForm()">
+  <form class="card comment-form">
     <div class="card-block">
       <textarea
         class="form-control"
@@ -10,6 +10,7 @@
     <div class="card-footer">
       <img :src="currentUser.image" class="comment-author-img">
       <button
+        @click.prevent="submitForm"
         class="btn btn-sm btn-primary"
         type="submit">
         Post Comment
@@ -29,9 +30,9 @@
     props: ['currentUser', 'slug'],
     methods: {
       submitForm() {
-        let slug = this.slug;
-        let body = this.comment.body;
-        this.$store.dispatch('createComment', { slug, body })
+        const slug = this.slug;
+        const body = this.comment.body;
+        this.$store.dispatch('createComment', {slug, body});
         this.comment.body = "";
       }
     }

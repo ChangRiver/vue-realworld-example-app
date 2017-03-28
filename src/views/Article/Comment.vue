@@ -5,13 +5,13 @@
     </div>
     <div class="card-footer">
       <router-link
-        to="'@' + comment.author.username"
+        :to="'/@' + comment.author.username"
         class="comment-author">
         <img :src="comment.author.image" class="comment-author-img">
       </router-link>
       &nbsp;
       <router-link
-        to="'@' + comment.author.username"
+        :to="'/@' + comment.author.username"
         class="comment-author">
         {{ comment.author.username }}
       </router-link>

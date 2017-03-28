@@ -1,11 +1,11 @@
 <template>
   <div class="article-meta">
-    <router-link to="'@' + article.author.username">
+    <router-link :to="'/@' + article.author.username">
       <img :src="article.author.image" alt="">
     </router-link>
 
     <div class="info">
-      <router-link class="author" :to="'@' + article.author.username">
+      <router-link class="author" :to="'/@' + article.author.username">
         {{ article.author.username }}
       </router-link>
       <span class="date">

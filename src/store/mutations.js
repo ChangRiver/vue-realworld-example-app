@@ -42,9 +42,9 @@ export default  {
     state.currentUser = currentUser;
     state.token = token;
   },
-  [APP_LOAD](state, { currentUser, token }) {
-    state.currentUser = currentUser;
-    state.token = token;
+  [APP_LOAD](state, payload) {
+    state.currentUser = payload.user;
+    state.token = payload.user.token;
     state.appLoaded = true;
   },
   [LOGOUT](state) {

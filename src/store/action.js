@@ -29,7 +29,6 @@ async  onHomePageLoad({
       api.Articles.all();
 
     await articlesPromise.then(res => {
-      console.log('onHomePageLoad articles', res);
       articles = res;
     });
     const tags = await api.Tags.getAll();
@@ -45,9 +44,7 @@ async  onHomePageLoad({
     commit
   }) {
     api.Auth.current().then(res => {
-      let currentUser = res.user;
-      let token = res.user.token;
-      commit(APP_LOAD, { currentUser, token })
+      commit(APP_LOAD, {...res})
     })
   },
   getArticleDetail({
@@ -92,6 +89,7 @@ async  onHomePageLoad({
     }) {
     api.Comments.create(slug, { body: body })
       .then(res => {
+        console.log('add comment ', res);
         commit(ADD_COMMENT, res)
       })
   },
@@ -140,7 +138,6 @@ async  onHomePageLoad({
     commit
   }, tag) {
     let articles = await api.Articles.byTag(tag);
-    // console.log('apply by tag ', articles);
     commit(APPLY_TAG_FILTER, { ...articles, tag })
   },
   onArticleCreated({
