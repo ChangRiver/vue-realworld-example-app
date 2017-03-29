@@ -15,8 +15,11 @@
   export default {
     data() {
       return {
-        today: '2017'
+        today: ''
       }
+    },
+    created() {
+      this.today = new Date().getFullYear()
     }
   }
 </script>

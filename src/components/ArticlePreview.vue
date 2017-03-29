@@ -16,7 +16,8 @@
 
     <div class="pull-xs-right">
       <button
-        class="btn btn-sm btn-outline-primary">
+        class="btn btn-sm"
+        :class="favoriteButtonClass" @click.prevent="handleClick">
         <i class="ion-heart"></i> {{ article.favoritesCount }}
       </button>
     </div>
@@ -35,8 +36,24 @@
 </div>
 </template>
 <script>
+  import { mapActions } from 'vuex';
   export default {
-    props: ['article']
+    props: ['article'],
+    computed: {
+      favoriteButtonClass() {
+        return this.article.favorited ? 'btn-primary' : 'btn-outline-primary'
+      }
+    },
+    methods: {
+      handleClick() {
+        if(this.article.favorited) {
+          this.unfavorite(this.article.slug)
+        } else {
+          this.favorite(this.article.slug)
+        }
+      },
+      ...mapActions(['favorite', 'unfavorite'])
+    }
   }
 </script>
 

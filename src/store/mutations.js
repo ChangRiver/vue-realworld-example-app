@@ -19,7 +19,9 @@ import {
   PROFILE_FAVORITES_PAGE_UNLOADED,
   CHANGE_TAB,
   APPLY_TAG_FILTER,
-  SET_PAGE
+  SET_PAGE,
+  ARTICLE_FAVORITED,
+  ARTICLE_UNFAVORITED
 } from './mutation-types'
 
 export default  {
@@ -110,5 +112,29 @@ export default  {
     state.articles = payload.articles;
     state.articlesCount = payload.articlesCount;
     state.currentPage = payload.currentPage
+  },
+  [ARTICLE_FAVORITED] (state, payload) {
+    state.articles = state.articles.map(article => {
+      if(article.slug === payload.article.slug) {
+        return {
+          ...article,
+          favoritesCount: payload.article.favoritesCount,
+          favorited: payload.article.favorited
+        }
+      }
+      return article;
+    })
+  },
+  [ARTICLE_UNFAVORITED] (state, payload) {
+    state.articles = state.articles.filter(article => {
+      if(article.slug === payload.article.slug) {
+        return {
+          ...article,
+          favoritesCount: payload.article.favoritesCount,
+          favorited: payload.article.favorited
+        }
+      }
+      return article;
+    })
   }
 }

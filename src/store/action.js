@@ -15,8 +15,8 @@ import {
   PROFILE_FAVORITES_PAGE_LOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
   APPLY_TAG_FILTER,
-  ARTICLE_CREATED,
-  EDITOR_PAGE_LOADED
+  ARTICLE_FAVORITED,
+  ARTICLE_UNFAVORITED
 } from './mutation-types'
 
 export default {
@@ -146,15 +146,22 @@ async  onHomePageLoad({
     const promise = slug ?
       api.Articles.update(Object.assign(article, slug)) :
       api.Articles.create(article)
+  },
+  favorite({
+    commit
+  }, slug) {
+    api.Articles.favorite(slug)
+      .then(res => {
+        commit(ARTICLE_FAVORITED, res)
+      })
+  },
+  unfavorite({
+    commit
+  }, slug) {
+    api.Articles.unfavorite(slug)
+      .then(res => {
+        commit(ARTICLE_UNFAVORITED, res)
+      })
   }
-  // async onEditorPageLoaded({
-  //   commit
-  // }, slug) {
-  //   if(slug) {
-  //    const articles = await api.Articles.get(slug)
-  //    commit(EDITOR_PAGE_LOADED, articles)
-  //   }
-  //   commit(EDITOR_PAGE_LOADED)
-  // }
 }
 
