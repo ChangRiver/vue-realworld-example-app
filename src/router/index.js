@@ -17,27 +17,27 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login
     },
     {
       path: '/register',
-      name: 'Register',
+      name: 'register',
       component: Register
     },
     {
       path: '/settings',
-      name: 'Settings',
+      name: 'settings',
       component: Settings
     },
     {
       path: '/article/:id',
-      name: 'Article',
+      name: 'article',
       component: Article
     },
     // {
@@ -56,10 +56,6 @@ export default new Router({
     //   ]
     // },
     {
-      path: '/@:username/article/:id',
-      component: Article
-    },
-    {
       path: '/@:username',
       component: Profile
     },
@@ -74,6 +70,14 @@ export default new Router({
     {
       path: '/editor/:slug',
       component: Editor
+    },
+    {
+      path: '/editor/article/:id',
+      redirect: '/article/:id'
+    },
+    {
+      path: '/@:username/article/:id',
+      redirect: '/article/:id'
     }
   ]
 })

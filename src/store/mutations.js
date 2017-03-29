@@ -78,7 +78,6 @@ export default  {
   [PROFILE_PAGE_UNLOADED] (state) {
     state.articles = [];
     state.articlesCount = null;
-    state.profile = null;
   },
   [FOLLOW_USER] (state, { profile }) {
     state.profile = profile
@@ -94,7 +93,6 @@ export default  {
   [PROFILE_FAVORITES_PAGE_UNLOADED] (state) {
     state.articles = [];
     state.articlesCount = null;
-    state.profile = null;
   },
   [CHANGE_TAB] (state, { feedType, articles, articlesCount }) {
     state.tab = feedType;

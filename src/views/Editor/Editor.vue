@@ -37,11 +37,12 @@
                   type="text"
                   class="form-control"
                   placeholder="Enter tags"
-                  v-model="tagInput">
+                  v-model="tagInput" @keyup.13="addTag">
 
                 <div class="tag-list">
-                  <span class="tag-default tag-pill">
-                    <i class="ion-close-round"></i>
+                  <span v-for="tag in article.tagList" class="tag-default tag-pill" :key="tag">
+                    <i class="ion-close-round" @click="removeTagHandler(tag)"></i>
+                    {{ tag }}
                   </span>
                 </div>
               </fieldset>
@@ -50,7 +51,7 @@
                 class="btn btn-lg pull-xs-right btn-primary"
                 type="button"
                 :disabled="inProgress"
-                @click="submitForm">
+                @click.prevent="submitForm">
                 Publish Article
               </button>
 
@@ -71,26 +72,55 @@
         article: {
           title: '',
           description: '',
-          body: ''
+          body: '',
+          tagList: []
         },
-        tagInput: '',
-        tagList: []
+        tagInput: ''
       }
     },
+    mounted() {
+      this.onLoad()
+    },
     methods: {
+      addTag() {
+        if(this.tagInput !== null) {
+          this.article.tagList.push(this.tagInput);
+        }
+        this.tagInput = '';
+      },
       submitForm() {
         this.inProgress = true;
-        api.Articles.create(this.article)
-          .then(res => {
-          this.inProgress = false;
-          console.log('article created ', res)
-        }, err => console.log(err))
+        const slug = { slug: this.$route.params.slug };
+        if(this.$route.params.slug) {
+          api.Articles.update(Object.assign(this.article, slug))
+            .then(res => {
+              this.inProgress = false;
+              console.log('article update ', res)
+              const redirectUrl = `article/${res.article.slug}`;
+              this.$router.push(redirectUrl);
+            }, err => console.log(err))
+        } else {
+          api.Articles.create(this.article)
+            .then(res => {
+              this.inProgress = false;
+              console.log('article created ', res)
+              const redirectUrl = `article/${res.article.slug}`;
+              this.$router.push(redirectUrl);
+            }, err => console.log(err))
+        }
+      },
+      removeTagHandler(tag) {
+        const idx = this.article.tagList.indexOf(tag);
+        this.article.tagList.splice(idx, 1);
       },
       onLoad() {
         if(this.$route.params.slug) {
           api.Articles.get(this.$route.params.slug)
             .then(res => {
-            console.log('editor page onload data ', res)
+            this.article.title = res.article.title;
+            this.article.description = res.article.description;
+            this.article.body = res.article.body;
+            this.article.tagList = res.article.tagList;
           })
         }
       }

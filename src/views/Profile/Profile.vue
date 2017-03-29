@@ -64,7 +64,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapActions } from 'vuex'
+  import {mapState, mapGetters, mapActions} from 'vuex'
   import ArticleList from '../../components/ArticleList'
   import FollowUserButton from '../../components/FollowUserButton'
   import EditProfileSettings from '../../components/EditProfileSettings'
@@ -76,30 +76,36 @@
     },
     computed: {
       ...mapGetters(['isUser']),
-      ...mapState([
+    ...mapState([
       'profile',
       'articles',
       'articlesCount'
-      ])
-    },
+    ])
+  },
   mounted()
   {
     let username = this.$route.params.username;
     this.getProfile({username});
-  }
-  ,
-    methods: {
-    ...
-      mapActions([
-        'getProfile'
-      ]),
-      Follow(username) {
-        this.$store.dispatch('onFollow', { username })
-      },
-      UnFollow(username) {
-        this.$store.dispatch('onUnFollow', { username })
-      }
+  },
+  beforeDestroy() {
+    this.clearProfile();
+  },
+  methods: {
+  ...
+    mapActions([
+      'getProfile',
+      'clearProfile'
+    ]),
+      Follow(username)
+    {
+      this.$store.dispatch('onFollow', {username})
     }
+  ,
+    UnFollow(username)
+    {
+      this.$store.dispatch('onUnFollow', {username})
+    }
+  }
   }
 </script>
 

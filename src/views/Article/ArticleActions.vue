@@ -7,7 +7,7 @@
       <i class="ion-edit"></i> Edit Article
     </router-link>
 
-    <button class="btn btn-outline-danger btn-sm" @click="delArticle(article.slug)">
+    <button class="btn btn-outline-danger btn-sm" @click="del">
       <i class="ion-trash-a"></i> Delete Article
     </button>
 
@@ -23,7 +23,7 @@ export default {
   methods: {
     ...mapActions(['delArticle']),
     del(slug) {
-      this.delArticle(slug);
+      this.delArticle(this.article.slug);
       this.$router.push('/')
     }
   }

@@ -86,12 +86,15 @@
   {
     let username = this.$route.params.username;
     this.getFavoritesProfile({username});
-  }
-  ,
+  },
+  beforeDestroy() {
+    this.clearFavoritesProfile()
+  },
   methods: {
   ...
     mapActions([
-      'getFavoritesProfile'
+      'getFavoritesProfile',
+      'clearFavoritesProfile'
     ]),
       Follow(username)
     {
