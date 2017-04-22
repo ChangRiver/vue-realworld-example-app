@@ -46,7 +46,7 @@ export default  {
   },
   [APP_LOAD](state, payload) {
     state.currentUser = payload.user;
-    state.token = payload.user.token;
+    state.token = payload.token;
     state.appLoaded = true;
   },
   [LOGOUT](state) {

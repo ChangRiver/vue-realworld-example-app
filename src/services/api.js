@@ -13,8 +13,10 @@ const encode = encodeURIComponent;
 
 let token = window.localStorage.getItem('jwt');
 
-if(token) {
-  Vue.http.headers.common['Authorization'] = `Token ${token}`;
+Vue.http.headers.common['Authorization'] = `Token ${token}`;
+
+if(!token) {
+  delete Vue.http.headers.common['Authorization'];
 }
 
 const setToken = _token => { token = _token; }

@@ -40,13 +40,6 @@ async  onHomePageLoad({
   }) {
     commit(HOME_PAGE_UNLOADED)
   },
-  onLoad({
-    commit
-  }) {
-    api.Auth.current().then(res => {
-      commit(APP_LOAD, {...res})
-    })
-  },
   getArticleDetail({
     commit
   }, params) {

@@ -10,24 +10,31 @@
   import api from './services/api';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'app',
   components: {
     layoutHeader: Header,
     layoutFooter: Footer
   },
-  mounted() {
+  async mounted() {
     const token = window.localStorage.getItem('jwt');
 
     if(token) {
       api.setToken(token);
+      api.Auth.current().then(res => {
+        this.APP_LOAD({token, ...res});
+      })
+    } else {
+      this.APP_LOAD({token})
     }
 
-    this.$store.dispatch('onLoad')
   },
   computed: {
     ...mapState(['appName', 'currentUser', 'appLoaded'])
+  },
+  methods: {
+  ...mapMutations(['APP_LOAD'])
   }
 }
 </script>
