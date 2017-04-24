@@ -1,11 +1,14 @@
 import Vue from 'vue';
-import VueResource from 'vue-resource';
+import store from '../store';
+import { LOGOUT } from '../store/mutation-types';
+import axios from 'axios';
+import router from '../router';
 
-Vue.use(VueResource);
+Vue.prototype.$http = axios;
 
 const API_ROOT = 'https://conduit.productionready.io/api';
 
-const responseBody = res => Promise.resolve(res.body);
+const responseBody = res => Promise.resolve(res.data);
 
 const handlerErr = err => Promise.reject(err);
 
@@ -13,23 +16,58 @@ const encode = encodeURIComponent;
 
 let token = window.localStorage.getItem('jwt');
 
-Vue.http.headers.common['Authorization'] = `Token ${token}`;
+// axios.defaults.timeout = 5000;
+axios.defaults.baseURL = 'https://conduit.productionready.io/api';
 
-if(!token) {
-  delete Vue.http.headers.common['Authorization'];
+// http request 拦截器
+axios.interceptors.request.use(
+  config => {
+    if(token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+// http response 拦截器
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if(error.response) {
+      switch(error.response.status) {
+        case 401:
+          store.commit(LOGOUT);
+          router.replace({path: 'login'})
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+const setToken = _token => { token = _token; };
+
+const parse = data => {
+  try {
+    JSON.stringify(data);
+  } catch(error) {
+    return false
+  }
 }
-
-const setToken = _token => { token = _token; }
 
 const request = {
   get: url =>
-    Vue.http.get(`${API_ROOT}${url}`).then(responseBody, handlerErr),
+    axios.get(`${API_ROOT}${url}`).then(responseBody, handlerErr),
   post: (url, body) =>
-    Vue.http.post(`${API_ROOT}${url}`, body).then(responseBody, handlerErr),
+    axios.post(`${API_ROOT}${url}`, body).then(responseBody, handlerErr),
   put: (url, body) =>
-    Vue.http.put(`${API_ROOT}${url}`, body).then(responseBody, handlerErr),
+    axios.put(`${API_ROOT}${url}`, body).then(responseBody, handlerErr),
   del: url =>
-    Vue.http.delete(`${API_ROOT}${url}`).then(responseBody, handlerErr)
+   axios.delete(`${API_ROOT}${url}`).then(responseBody, handlerErr)
 };
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count:0}`;

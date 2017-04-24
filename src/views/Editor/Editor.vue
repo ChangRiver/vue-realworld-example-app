@@ -101,13 +101,15 @@
             }, err => console.log(err))
         } else {
           api.Articles.create(this.article)
-            .then(res => {
+            .then(
+              res => {
               this.inProgress = false;
               console.log('article created ', res)
               const redirectUrl = `article/${res.article.slug}`;
               this.$router.push(redirectUrl);
-            }, err => console.log(err))
-        }
+            },
+             err => console.log(err)
+        )}
       },
       removeTagHandler(tag) {
         const idx = this.article.tagList.indexOf(tag);

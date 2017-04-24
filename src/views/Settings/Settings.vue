@@ -23,6 +23,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import api from '../../services/api';
   import { mapState } from 'vuex';
   import ListErrors from '../../components/ListErrors';
@@ -45,7 +46,6 @@
         this.inProgress = true;
         api.Auth.save(user)
           .then(res => {
-          console.log('settings saved ', res);
           this.$store.commit('SETTINGS_SAVED', res)
           this.inProgress = false;
         }, err => {
@@ -56,7 +56,8 @@
       logout() {
         window.localStorage.setItem('jwt', '');
         api.setToken(null);
-        this.$store.commit('LOGOUT')
+
+        this.$store.commit('LOGOUT');
         this.$router.push('/')
       }
     }
