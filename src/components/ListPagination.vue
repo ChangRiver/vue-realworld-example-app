@@ -1,25 +1,30 @@
 <template>
-  <nav v-if="articlesCount > 10">
-    <ul class="pagination">
-      <li v-for="v in pageRange" :key="v"
-          class="page-item"
-          @click.prevent="setPage(v)">
-        <a href="" class="page-link" :class="{'active': currentPage === v + 1 }">{{ v + 1 }}</a>
-      </li>
-    </ul>
-  </nav>
+  <paginate
+    :page-count="pageCount"
+    :margin-pages="2"
+    :page-range="5"
+    :click-handler="onClick"
+    :initial-page="0"
+    :container-class="'pagination'"
+    :page-class="'page-item'"
+    :page-link-class="'page-link-item'"
+    :prev-class="'prev-item'"
+    :prev-link-class="'prev-link-item'"
+    :next-class="'next-item'"
+    :next-link-class="'next-link-item'"
+  >
+  </paginate>
 </template>
 <script>
-  import { mapGetters, mapState } from 'vuex'
+  import { mapGetters, mapState, mapActions } from 'vuex'
   export default {
     props: ['articlesCount', 'currentPage'],
     computed: {
-      ...mapGetters(['pageRange'])
+      ...mapGetters(['pageCount'])
     },
     methods: {
-      setPage(p) {
-        const page = p + 1;
-        this.$emit('onSetPage', page)
+      onClick(pageNum) {
+        this.$emit('onSetPage', pageNum);
       }
     }
   }

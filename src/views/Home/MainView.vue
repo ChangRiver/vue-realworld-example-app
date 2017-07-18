@@ -69,6 +69,7 @@ export default {
       })
     },
     async onSetPage(page) {
+      page = page - 1;
       const currentPage = page;
       let articles;
       let articlesPromise = this.tab === 'feed' ?

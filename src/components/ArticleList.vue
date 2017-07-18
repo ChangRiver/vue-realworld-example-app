@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div v-if="!articles.length" class="article-preview">Loading...</div>
-    <!--<div v-cloak v-if="!articles.length" class="article-preview">No articles are here...yet.</div>-->
+  <div v-if="articlesCount === 0" class="article-preview">No articles are here...yet.</div>
+  <div v-else-if="!articles.length" class="article-preview">Loading...</div>
+  <div v-else-if="articles.length !== 0">
     <article-preview v-cloak v-for="(article, index) in articles" :article="article" :key="index"></article-preview>
 
     <list-pagination

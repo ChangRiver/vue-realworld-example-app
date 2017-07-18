@@ -85,8 +85,8 @@ const Articles = {
     request.get(`/articles?tag=${encode(tag)}&${limit(10, page)}`),
   favoritedBy: (author, page) =>
     request.get(`/articles?favorited=${encode(author)}&${limit(10, page)}`),
-  feed: () =>
-    request.get('/articles/feed?limit=10&offset=0'),
+  feed: (page) =>
+    request.get(`/articles/feed?${limit(10, page)}`),
   update: article =>
     request.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
   create: article =>

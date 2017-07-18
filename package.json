@@ -12,6 +12,7 @@
     "axios": "^0.16.1",
     "vue": "^2.2.1",
     "vue-router": "^2.2.0",
+    "vuejs-paginate": "^1.1.0",
     "vuex": "^2.2.1"
   },
   "devDependencies": {
